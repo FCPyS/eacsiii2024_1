@@ -1,0 +1,25 @@
+---
+title: "Estadística Aplicada para Ciencias Sociales III"
+---
+
+## La Estadística y la Sociología, grandes hermanitas
+
+## ¿Qué haremos por acá?
+
+A partir de una estrategia teórica y práctica, las, les y los estudiantes conocerán y aplicarán los métodos estadísticos básicos que se utilizan en la investigación social. El estudiantado aplicará elementos básicos del procesamiento de datos como factor integrador del marco teórico-conceptual y la realidad empírica.
+
+Específicamente en este semestre evaluaremos proceso de inferencias y estudiaremos más a fondo las fuentes de información.
+
+## Tareas
+
+Todas las tareas se entregan por Google Classroom: te daremos el código de la clase
+
+## Bases de datos
+
+-   [ENOE](https://www.inegi.org.mx/programas/enoe/15ymas/)
+
+-   [ICE](https://imco.org.mx/indice-de-competitividad-estatal-2022/)
+
+## Biblio básica
+
+-   [Drive](https://drive.google.com/drive/folders/1RFMDnhFarWpD8rPXmXLAIsnHLT8ac3Cs?usp=share_link)
