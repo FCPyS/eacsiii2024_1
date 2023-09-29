@@ -23,7 +23,9 @@ website:
       - section: "Instalar R"
         contents:
           - instala.qmd
-
+      - section: "Taller de R"
+        contents:
+          - P1.qmd
 format:
   html:
     theme: 

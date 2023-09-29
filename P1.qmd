@@ -1,0 +1,286 @@
+---
+title: "Taller 1"
+---
+
+## Introducción
+
+En RStudio podemos tener varias ventanas que nos permiten tener más control de nuestro "ambiente", el historial, los "scripts" o códigos que escribimos y por supuesto, tenemos nuestra consola, que también tiene el símbolo "\>" con R. Podemos pedir operaciones básicas
+
+```{r 2}
+2+5
+5*3
+
+#Para escribir comentarios y que no los lea como operaciones ponemos el símbolo de gato
+# Lo podemos hacer para un comentario en una línea o la par de una instrucción
+1:5               # Secuencia 1-5
+
+seq(1, 10, 0.5)   # Secuencia con incrementos diferentes a 1
+
+c('a','b','c')  # Vector con caracteres
+1:7             # Entero
+40<80           # Valor logico
+2+2 == 5        # Valor logico
+T == TRUE       # T expresion corta de verdadero
+
+```
+
+R es un lenguaje de programación por objetos. Por lo cual vamos a tener objetos a los que se les asigna su contenido. Si usamos una flechita "\<-" o "-\>" le estamos asignando algo al objeto que apunta la felcha.
+
+```{r}
+x <- 24         # Asignacion de valor 24 a la variable x para su uso posterior (OBJETO)
+x/2             # Uso posterior de variable u objeto x
+x               # Imprime en pantalla el valor de la variable u objeto
+x <- TRUE       # Asigna el valor logico TRUE a la variable x OJO: x toma el ultimo valor que se le asigna
+x
+```
+
+## Vectores
+
+Los vectores son uno de los objetos más usados en R.
+
+```{r}
+dado<-1:6  # vector numérico
+pluscuamperfecto <- "hola" # el nombre puede ser más grande
+
+moneda<-c("Aguila", "Sol") # un objecto que tiene un vector de caracter
+```
+
+## Muestreo aleatorio
+
+Podemos usar la función `{sample()}`
+
+```{r}
+
+sample(1:19, size=1)
+
+sample(x=c("Erick", "Emmanuel", "Scandra", "Daniela", "Alberto"),
+       size=2)
+
+sample( x =1:6, 
+       size = 10,
+       replace = T,
+       prob= c(1/5,1/5,1/5, 0, 1/5, 1/5))
+
+
+sample(x = moneda,
+       size = 15,
+       replace = TRUE)
+
+```
+
+
+
+## Juegos de azar
+
+Con R podemos jugar juegos de azar: digamos, tirar un dado o lanzar una moneda, y mucho más rápido que nosotros. Y con eso vamos establecer algunos elementos esenciales de la probabilidad
+
+El comando principal es `sample()`
+Tenemos que decir a R de dónde elegimos y cuántos elegir. R puede muestrear con y sin reemplazo. 
+
+- **Con reemplazo** significa que elegimos un elemento de nuestro universo  y lo devolvemos. 
+- **Sin reemplazo** significa qn elemento de nuestro universo y no lo devolvemos. 
+
+### Un dado
+
+Entonces, digamos que queremos que R lance un dado de seis caras una vez. Vamos a usar un nuevo formato para escribir una secuencia de números, como ya los habíamos aprendido.
+```{r}
+1:6
+dado<-1:6
+```
+
+Si quisiéramos tirar ese dado una vez, es decir con "sample", tomaríamos una muestra de tamaño 1 de ese universo:
+```{r}
+sample(1:6, 1)
+sample(dado, 1)
+
+```
+
+Si quisiéramos lanzar muchas veces más ese dado:
+```{r}
+sample(1:6, 10, replace = T)
+sample(dado, 10, replace = T)
+
+```
+
+Retomando lo último que vimos en la práctica pasada, podemos hacer una función
+```{r}
+tirar_dado <- function(n) {
+  sample(1:6, n, rep = T)
+}
+tirar_dado(10)
+
+```
+
+### Tirar una moneda
+```{r}
+moneda<-c("Aguila", "Sol")
+sample(c("Aguila", "Sol"), 1)
+sample(moneda, 1)
+
+```
+También podemos hacer una función
+```{r}
+tirar_moneda <- function(n) {
+  sample(c("Aguila", "Sol"), n, rep = T)
+}
+tirar_moneda(10)
+
+```
+Podemos hacer una función más general que use nuestros objetos moneda y dado
+```{r}
+tirar<-function(data,n) {
+    sample(data, n, rep = T)
+}
+tirar(dado,1)
+tirar(moneda,2)
+
+```
+
+
+
+## Aleatorio, pero regular
+Con estas funciones ya podemos ver qué pasa con nuestras probabilidades cuando repetimos 
+
+
+Veamos con el dado
+```{r}
+dado_millon<-tirar_dado(1000000)
+table(dado_millon)
+
+```
+
+Veamos con la moneda
+```{r}
+moneda1000<- tirar_moneda(1000)
+table(moneda1000)
+prop.table(table(moneda1000))
+```
+Que tal si tiramos un millón
+```{r}
+moneda_millon<- tirar_moneda(1000000)
+table(moneda_millon)
+prop.table(table(moneda_millon))
+```
+
+
+
+## Distribuciones precargadas
+En realidad hemos estado jugando ya con parámetros de las distribuciones. Cuando tiramos una moneda una probabilidad ímplicita, al hacer nuestras funciones de tirar basadas en "sample" es que todas tienen las misma probabilidad (o juego limpio). Pero no siempre es así.
+
+Daremos un paseo por las distribuciones más famosas y para qué sirven:
+
+```{r}
+help(Distributions)
+```
+
+Para cada distribución de probabilidad, R dispone de cuatro sub-funciones, que sirven como prefijos:
+
+- *d:* función de densidad o de probabilidad. 
+- *p:* función de distribución 
+- *q:* función para el cálculo de cuantiles.
+- *r:* función para simular datos con dicha distribución.
+
+
+## Binomial
+
+<li>P(X=k) =dbinom(k,n,p) </li>
+
+<li>P(X≤k) =pbinom(k,n,p) </li>
+
+<li>qa=min{x:P(X≤x)≥a} =qbinom(a,n,p)</li>
+
+<li>rbinom(m,n,p) genera m valores aleatorios con esta distribución</li>
+
+Si X≈B(25,0.6) tenemos:
+
+P(X=10)
+```{r}
+dbinom(x = 10,
+       size = 25,
+       prob = 0.6)
+
+```
+
+P(X≤10)
+```{r}
+pbinom(10,25,0.6)
+```
+o también:
+
+```{r}
+sum(dbinom(0:10,25,0.6))
+```
+
+
+q0.95=min{x:P(X≤x)≥0.95}
+## [1] 8
+```{r}
+qbinom(0.95,25,0.6)
+```
+
+
+Simulamos 30 valores de esta distribución:
+```{r}
+rbinom(30,25,0.6)
+```
+
+
+Podemos representar fácilmente la función de probabilidad de la distribución binomial:
+
+```{r}
+plot(dbinom(0:30,30,0.6),type="h",xlab="k",ylab="P(X=k)",main="Función de Probabilidad B(30,0.6)")
+```
+
+El efecto de "p" en la distribución
+```{r}
+plot(dbinom(0:30,30,0.3),type="h",xlab="k",ylab="P(X=k)",main="Función de Probabilidad B(30,0.3)")
+
+plot(dbinom(0:30,30,0.5),type="h",xlab="k",ylab="P(X=k)",main="Función de Probabilidad B(30,0.5)")
+
+plot(dbinom(0:30,30,0.9),type="h",xlab="k",ylab="P(X=k)",main="Función de Probabilidad B(30,0.9)")
+```
+
+## Distribución Normal
+Si X sigue una distribución normal N(μ,σ), entonces:
+<li>f(x) = dnorm(x,mu,sigma)</li>
+<li>P(X≤k) = pnorm(x,mu,sigma)</li>
+<li>qa=min{x:P(X≤x)≥a} = qnorm(a,mu,sigma)</li>
+<li>rnorm(n,mu,sigma) genera n valores aleatorios N(μ,σ)</li>
+
+Supongamos que X≈N(200,50). Entonces:
+Calculamos f(150)
+
+```{r}
+dnorm(150,200,50)
+```
+
+Podemos hacer varios valores posibles
+```{r}
+x<-seq(0,400,by=0.5)
+dnorm(x,200,50)
+```
+
+Con esto también podemos graficar
+```{r}
+curve(dnorm(x,200,50),xlim=c(0,400),col="blue",lwd=2,
+      xlab="x",ylab="f(x)",main="Función de Densidad N(200,50)")
+```
+
+
+Calculamos la probabilidad P(X≤180)
+```{r}
+pnorm(180,200,50)
+```
+
+P(X>168)
+```{r}
+1-pnorm(168,200,50)
+pnorm(168,200,50, lower.tail=FALSE)
+
+```
+
+P(150≤X≤168)
+```{r}
+pnorm(168,200,50)-pnorm(150,200,50)
+```
+

@@ -52,3 +52,7 @@
 .Rproj.user/shared/notebooks/paths
 .DS_Store
 ~$CSIII_AE.docx
+
+/.quarto/
+/.Rproj.user/
+.Rhistory
